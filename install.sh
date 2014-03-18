@@ -13,20 +13,25 @@ if ! [ $(id -u) = 0 ]; then
 fi
 
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd $SCRIPTDIR
+cd ${SCRIPTDIR}
 
 LP=`pwd`
 
 pkgname=ufsd-module
 pkgdir=${pkgname}-${pkgver}
 MODULE_NAME=ufsd
-MODULE_NAME2=jnl
 
 
 if ! which dkms > /dev/null
 then
 	apt-get install -y --no-install-recommends dkms
 fi
+
+[ -f ${paragon_file} ] || {
+	echo "File not found: ${paragon_file}"
+	echo "download from: http://www.paragon-software.com/home/ntfs-linux-professional/release.html"
+	exit 1
+}
 
 clean_dir() {
 	rm -fr ${pkgdir}
@@ -39,7 +44,7 @@ cp dkms.conf ${pkgdir}/
 sed "s/PACKAGE_VERSION=VERSION/PACKAGE_VERSION=\"${pkgver}\"/" -i ${pkgdir}/dkms.conf
 tar -xzf ${paragon_file} -C ${pkgdir}
 
-sudo cp -fR ${pkgdir} /usr/src/
+sudo mv ${pkgdir} /usr/src/
 cd /usr/src/${pkgdir}
 
 
