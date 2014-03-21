@@ -45,7 +45,7 @@ install_dkms() {
 	echo ">> Install dkms"
 		if ! which dkms > /dev/null
 		then
-			apt-get install -y --no-install-recommends dkms 1>/dev/null
+			apt-get update && apt-get install -y --no-install-recommends dkms 1>/dev/null
 		fi
 	exit_func $?
 }
@@ -151,7 +151,7 @@ setup_script() {
 		if ! which git > /dev/null
 		then
 			echo ">> Install git"
-				apt-get install -y --no-install-recommends git 1>/dev/null
+				apt-get update && apt-get install -y --no-install-recommends git 1>/dev/null
 			exit_func $?
 		fi
 		echo ">> clone \"${project_dir}\" repo"
