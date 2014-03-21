@@ -36,6 +36,11 @@ main() {
 }
 
 
+load_file_version() {
+	source VERSION
+	pkgdir=${pkgname}-${pkgver}
+}
+
 install_dkms() {
 	echo ">> Install dkms"
 		if ! which dkms > /dev/null
@@ -43,11 +48,6 @@ install_dkms() {
 			apt-get install -y --no-install-recommends dkms 1>/dev/null
 		fi
 	exit_func $?
-}
-
-load_file_version() {
-	source VERSION
-	pkgdir=${pkgname}-${pkgver}
 }
 
 check_paragon_file() {
