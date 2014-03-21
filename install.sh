@@ -159,7 +159,7 @@ setup_script() {
 			git clone https://github.com/bySabi/${project_dir}.git
 		exit_func $?
 		cd ${project_dir}
-		chmod +x install.sh && ./install.sh &
+		chmod +x install.sh && ./install.sh
 		exit 0
 	fi
 }
