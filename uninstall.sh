@@ -1,7 +1,7 @@
 #!/bin/bash
 
-## CUSTOM
-pkgver=8.9.0
+# load_file_version()
+source VERSION
 
 #isrootuser(){
 if ! [ $(id -u) = 0 ]; then
@@ -12,8 +12,6 @@ fi
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $SCRIPTDIR
 
-LP=`pwd`
-
 pkgname=ufsd-module
 pkgdir=${pkgname}-${pkgver}
 
@@ -22,11 +20,9 @@ if ! [ "$ufsd_status" == ""  ]; then
 	dkms remove -m ${pkgname} -v ${pkgver} --all
 fi
 
-clean_dir() {
-	rm -fr /usr/src/${pkgdir}
-}
-clean_dir
+# clean_dir()
+#rm -fr /usr/src/${pkgdir}
 
 sed -i '/ufsd/d' /etc/modules
 
-
+sed -i '/ufsd/d' /etc/fstab
