@@ -22,13 +22,14 @@ main() {
 
 	load_file_version
 	install_dkms
-	check_paragon_file
+#	check_paragon_file
 	uninstall_old_dkms
 	set_package_dir
+	compiled_package_dir
 	move_package_dir
 	chdir_package_dir
-	configure_package_src
-	fix_makefile
+#	configure_package_src
+#	fix_makefile
 	add_install_build_dkms_module
 	load_kernel_module
 	add_kernel_module_to_etc_modules
@@ -73,7 +74,12 @@ set_package_dir() {
 		mkdir -p ${pkgdir}
 		cp dkms.conf ${pkgdir}/
 		sed "s/PACKAGE_VERSION=VERSION/PACKAGE_VERSION=\"${pkgver}\"/" -i ${pkgdir}/dkms.conf
-		tar -xzf ${paragon_file} -C ${pkgdir}
+	exit_func $?
+}
+
+compiled_package_dir() {
+	echo ">> add compiled paragon-dkms package dir"
+		cp files/* ${pkgdir}/
 	exit_func $?
 }
 
@@ -156,7 +162,7 @@ setup_script() {
 		fi
 		echo ">> clone \"${project_dir}\" repo"
 			[ -d ${project_dir} ] && rm -fr ${project_dir}
-			git clone https://github.com/bySabi/${project_dir}.git
+			git clone -b compiled https://github.com/bySabi/${project_dir}.git
 		exit_func $?
 		cd ${project_dir}
 		chmod +x install.sh && ./install.sh
